@@ -1,0 +1,87 @@
+#registerBody{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+#registerContainer{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 2rem 3rem;
+    background-color: white;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#registerContainer input{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+    width: 35vw;
+    margin-top: .5rem;
+    transition: all 500ms;
+    max-width: 300px;
+}
+
+#registerContainer input:focus{
+    outline: none;
+    left: 51%;
+    scale: 105% !important;
+}
+
+#registerContainer button{
+    width: 25vw;
+    max-width: 250px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    transition: all 500ms;
+}
+
+#registerContainer button:hover{
+    scale: 105% !important;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+
+#registerContainer p{
+    position: absolute;
+    top: 0;
+    right: .5em;
+    cursor: pointer;
+    transition: all 500ms ease;
+    font-weight: bold;
+}
+
+#registerContainer h1{
+    font-size: 1.75rem;
+}
+
+#registerContainer p:hover{
+    scale: 105% !important;
+}
+
+@media (max-width: 750px){
+    #registerContainer{
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 0;
+    }
+    #registerContainer p{
+        top: 30vh;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 2rem;
+        color: red;
+    }
+}

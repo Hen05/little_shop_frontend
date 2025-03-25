@@ -1,0 +1,9 @@
+h1{
+    color: white;
+}
+
+.mainContainer{
+    position: absolute;
+    right: 0;
+    width: calc(100% - 250px);
+}

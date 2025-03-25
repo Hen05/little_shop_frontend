@@ -1,0 +1,33 @@
+#loginContainer{
+    margin: 2rem;
+}
+
+#loginContainer input{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+
+    margin-top: .5rem;
+    transition: all 500ms;
+    max-width: 300px;
+}
+
+#loginContainer input:focus{
+    outline: none;
+    left: 51%;
+    scale: 105% !important;
+}
+
+#loginContainer button{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    transition: all 500ms;
+}
+
+#loginContainer button:hover{
+    scale: 105% !important;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}

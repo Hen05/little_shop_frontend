@@ -1,0 +1,13 @@
+.sellContainer{
+    display: flex;
+}
+
+.carImg{
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    background-image: url("../../assets/devImages/no-image.jpg");
+}
+
+.carName{
+}

@@ -1,0 +1,64 @@
+.addItemsContainer {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Garante que os itens fiquem alinhados no topo */
+    padding: 20px; /* Espaçamento interno */
+    box-sizing: border-box; /* Para garantir que o padding não interfira nas dimensões */
+}
+
+.addItemsContainer form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch; /* Permite que os itens se estendam horizontalmente */
+    gap: 15px; /* Espaçamento entre os elementos do formulário */
+}
+
+.exampleImage{
+    align-self: center;
+
+    box-sizing: content-box;
+    width: 100px;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.imageContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.addItemsContainer form select{
+    align-self: center;
+    width: 50%;
+}
+
+.addItemsContainer form input, .addItemsContainer form select, .addItemsContainer form select{
+    align-self: center;
+    max-width: 250px;
+}
+
+.addItemsContainer form input[type=number]{
+    width: 25%;
+    max-width: 125px;
+}
+
+.addItemsContainer form select, .addItemsContainer form input {
+    margin: 10px 0 0 10px;
+}
+
+.addItemsContainer form button{
+    align-self: center;
+    width: 10vw;
+    padding: .5rem 1rem;
+    max-width: 250px;
+    transition: all 500ms;
+    cursor: pointer;
+}
+
+.addItemsContainer form button:hover{
+    background-color: green;
+}
