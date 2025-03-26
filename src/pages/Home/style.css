@@ -6,4 +6,6 @@ h1{
     position: absolute;
     right: 0;
     width: calc(100% - 250px);
+    top: 0;
+    padding-top: 20px;
 }

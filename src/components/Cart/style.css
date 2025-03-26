@@ -1,13 +1,49 @@
-.sellContainer{
+.container10{
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
-.carImg{
+.cartContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.cartItemsContainer{
+    position: relative;
+    width: 150%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    justify-content: center;
+}
+
+.cartItem{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.cartItemImg{
     width: 100px;
     height: 100px;
-    background-size: cover;
-    background-image: url("../../assets/devImages/no-image.jpg");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.carName{
+.cartInfos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cartItemName{
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
 }

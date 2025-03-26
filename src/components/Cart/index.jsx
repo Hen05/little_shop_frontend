@@ -1,141 +1,122 @@
 import {useEffect, useState} from "react";
-import api from "../../services/api.js";
 import './style.css';
+import {formatToReal} from "../../services/formatter.js";
+import FinishBuy from './FinishBuy';
+import api from "../../services/api.js";
 
-function Cart(){
-    const [items, setItems] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [selectedItem, setSelectedItem] = useState([]);
-
-    async function getItems() {
-        try {
-            const response = await api.get('/item');
-            if (response.status === 200) {
-                return response.data;
-            } else {
-                alert("Something went wrong! Cannot get Items");
-                return [];
-            }
-        } catch (error) {
-            console.error("Error fetching items:", error);
-            alert("Something went wrong! Cannot get Items");
-            return [];
-        }
-    }
+function Cart({ selectedItems = [], setSelectedItems, fetchItems}) {
+    const [total, setTotal] = useState(0);
+    const [isFinishBuy, setIsFinishBuy] = useState(false);
 
     useEffect(() => {
-        async function fetchItems() {
-            const fetchedItems = await getItems();
-            setItems(fetchedItems);
+        console.log(selectedItems);
+        setTotal(selectedItems.reduce((total, item) => total + (item.price * item.amount) , 0));
+    }, [selectedItems])
+    
+    function handleFinishBuy(){
+        if(total !== 0){
+            setIsFinishBuy(true);
         }
-        fetchItems();
-    }, []);
-
-    function handleSearch(e) {
-        setSearchTerm(e.target.value.toLowerCase());
     }
 
-    const filteredItems = items.filter(item =>
-        item.name.toLowerCase().includes(searchTerm) ||
-        item.type.toLowerCase().includes(searchTerm) ||
-        item.price.toString().includes(searchTerm) ||
-        item.stock.toString() === (("indisponivel".includes(searchTerm) ? '0' : searchTerm))
-    );
+    function handleCancelFinishBuy(){
+        setIsFinishBuy(false);
+    }
 
-    function handleAddToCart(target) {
-        const itemId = target.parentElement.parentElement.id;
-        const item = items.find(item => item._id == itemId);
-        const isItemSelected = selectedItem.find(item => item.id == itemId);
+    function finishBuy(){
+        const paymentMethod = document.querySelector('.finishArea select').value
 
-        if (isItemSelected) {
-            setSelectedItem(prevItems =>
-                prevItems.map(item =>
-                    item.id === itemId
-                        ? { ...item, amount: Number(item.amount) + 1 }  // Incrementa a quantidade
-                        : item
-                )
-            );
-        } else {
-            const newItem = {
-                id: itemId,
-                name: item.name,
-                price: item.price,
-                amount: 1
-            };
-
-            setSelectedItem(prevItems => [...prevItems, newItem]);  // Adiciona o novo item
+        if(paymentMethod === 'Selecione a forma de pagamento'){
+            return;
         }
+
+        const itemsData = selectedItems.map(
+            (item) => {
+                return {
+                    'itemId': item.id,
+                    'quantity': item.amount
+                }
+            }
+        )
+
+        const data = {
+            itemsData,
+            paymentMethod
+        }
+
+        setIsFinishBuy(false);
+        setSelectedItems([]);
+
+        api.post('/sales', data).then(res => {
+            alert('Compra realizada com sucesso!')
+            console.log(res);
+            fetchItems();
+        }).catch(err => {
+            alert('Deu erro');
+            console.log(err);
+        })
     }
 
     return (
-        <div className={'sellContainer'}>
-            <form>
-                <label>Pesquisar item</label>
-                <input
-                    placeholder="Nome, Tipo, Preço, Etc..."
-                    onChange={handleSearch}
-                    value={searchTerm}
-                />
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Preço</th>
-                        <th>Estoque</th>
-                        <th>Adicionar</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {filteredItems.map((item, index) => (
-                        <tr key={index} id={item._id}>
-                            <td>{item.name}</td>
-                            <td>R${item.price}</td>
-                            <td>{item.stock}</td>
-                            <td>
-                                <button className={'addBtn'} type="button" onClick={(e) => handleAddToCart(e.target)}>
-                                    +
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
-            </form>
+        <div className={'container10'}>
+            {isFinishBuy && <FinishBuy finishBuy={finishBuy} cartItems={selectedItems} cancelBuy={handleCancelFinishBuy}/>}
+            <h1>Carrinho de Compras</h1>
             <div className={'cartContainer'}>
-                <h3>Carrinho de Compras</h3>
-                <table>
-                    <ul>
-                    {selectedItem.map((item, index) => (
-                        <li key={index} id={item.id}>
-                            <div className={'carImg'}></div>
-                            <div className={'carName'}>{item.name}</div>
-                            <div className={'carPrice'}>{item.price}</div>
-                            <div className={'carAmount'}>
+                <div className={'cartItemsContainer'}>
+                    {selectedItems.map((item, index) => (
+                        <div className={'cartItem'} index={index} id={item.id}>
+                            <div
+                                className={'cartItemImg'}
+                                style={{backgroundImage: `url('${item.image}')`}}>
+                            </div>
+                            <div className={'cartInfos'}>
+                                <div className={'cartItemName'}>{item.name}</div>
+                                <div className={'cartItemPrice'}>{formatToReal(item.price)}</div>
                                 <input
-                                    id={'amount'}
-                                    type={'number'}
-                                    value={item.amount}
-                                    onChange={(e) => {
-                                        const newAmount = e.target.value;
-                                        const id = e.target.parentElement.parentElement.id;
-                                        setSelectedItem(prevItems =>
-                                            prevItems.map(item =>
-                                                item.id === id
-                                                    ? { ...item, amount: newAmount }  // Atualiza o amount do item
-                                                    : item
+                                    className="cartItemAmount"
+                                    value={item.amount === "" ? "" : item.amount}
+                                    max={item.stock}
+                                    type="number"
+                                    onChange={e => {
+                                        let value = e.target.value.trim();
+
+                                        while (value.length > 1 && value[0] === '0') {
+                                            value = value.slice(1);
+                                        }
+
+                                        if (value === '') {
+                                            setSelectedItems(prevItems =>
+                                                prevItems.map(i =>
+                                                    i.id === item.id ? {...i, amount: ""} : i
+                                                )
+                                            );
+                                            return;
+                                        }
+
+                                        const newAmount = Number(value);
+
+                                        if (isNaN(newAmount) || newAmount < 1) return;
+
+                                        setSelectedItems(prevItems =>
+                                            prevItems.map(i =>
+                                                i.id === item.id ? {...i, amount: newAmount} : i
                                             )
                                         );
                                     }}
+                                    onKeyDown={e => {
+                                        if (e.key === "Backspace" && item.amount === "") {
+                                            setSelectedItems(prevItems => prevItems.filter(i => i.id !== item.id));
+                                        }
+                                    }}
                                 />
                             </div>
-                        </li>
+                        </div>
                     ))}
-                    </ul>
-                </table>
+               </div>
             </div>
-
+            <button onClick={handleFinishBuy}>Total: {total}</button>
         </div>
-    )
+    );
 }
 
-export default Sell;
+export default Cart;

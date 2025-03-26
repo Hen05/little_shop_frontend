@@ -1,6 +1,7 @@
 import api from "../../services/api.js";
 import { useEffect, useState } from "react";
 import './style.css';
+import {formatToReal} from "../../services/formatter.js";
 
 function ViewItems() {
     const [items, setItems] = useState([]);
@@ -60,7 +61,7 @@ function ViewItems() {
                             </div>
                             <p className="itemName">{item.name}</p>
                             <p className="itemType">{item.type}</p>
-                            <p className="itemPrice">R${item.price}</p>
+                            <p className="itemPrice">{formatToReal(item.price)}</p>
                             <p className="itemStock">
                                 {item.stock <= 0 ? "Indisponível" : `Disponibilidade: ${item.stock}`}
                             </p>

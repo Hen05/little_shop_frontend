@@ -1,0 +1,51 @@
+.finishBuyContainer{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    width: calc(100% - 250px);
+    height: 100%;
+    top: 0;
+    right: 0;
+    color: white;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.finishBuyContainer *{
+    margin: 10px 0 0 10px;
+}
+
+.finishBuyContainer h1{
+    color: white;
+}
+
+.finishArea{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.finishArea select{
+    width: 30%
+}
+
+.cartGrid {
+    width: 70%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    justify-content: center;
+}
+
+.cartItem-fb{
+    display: flex;
+    color: black;
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.cancel{
+    background-color: red;
+}

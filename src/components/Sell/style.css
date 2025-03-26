@@ -1,3 +1,11 @@
 .viewItemsContainer{
     width: 50%;
 }
+
+.cartContainer{
+    width: 50%;
+}
+
+.sellContainer{
+    display: flex;
+}

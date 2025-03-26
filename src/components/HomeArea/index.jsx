@@ -1,6 +1,6 @@
 function Sell(){
     return (
-        <h1>Teste</h1>
+        <h1>Em Desenvolvimento</h1>
     )
 }
 

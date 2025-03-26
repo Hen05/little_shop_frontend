@@ -1,34 +1,10 @@
 import api from "../../services/api.js";
 import { useEffect, useState } from "react";
 import './style.css';
+import {formatToReal} from "../../services/formatter.js";
 
-function ViewItems({addItem}) {
-    const [items, setItems] = useState([]);
+function ViewItems({addItem, items}) {
     const [searchTerm, setSearchTerm] = useState("");
-
-    async function getItems() {
-        try {
-            const response = await api.get('/item');
-            if (response.status === 200) {
-                return response.data;
-            } else {
-                alert("Something went wrong! Cannot get Items");
-                return [];
-            }
-        } catch (error) {
-            console.error("Error fetching items:", error);
-            alert("Something went wrong! Cannot get Items");
-            return [];
-        }
-    }
-
-    useEffect(() => {
-        async function fetchItems() {
-            const fetchedItems = await getItems();
-            setItems(fetchedItems);
-        }
-        fetchItems();
-    }, []);
 
     function handleSearch(e) {
         setSearchTerm(e.target.value.toLowerCase());
@@ -49,7 +25,7 @@ function ViewItems({addItem}) {
                 onChange={handleSearch}
                 value={searchTerm}
             />
-            <div className="container">
+            <div className="containerAdd">
                 {filteredItems.length > 0 ? (
                     filteredItems.map((item, index) => (
                         <div className="item" key={index} id={item._id}>
@@ -60,11 +36,15 @@ function ViewItems({addItem}) {
                             </div>
                             <p className="itemName">{item.name}</p>
                             <p className="itemType">{item.type}</p>
-                            <p className="itemPrice">R${item.price}</p>
+                            <p className="itemPrice">{formatToReal(item.price)}</p>
                             <p className="itemStock">
                                 {item.stock <= 0 ? "Indisponível" : `Disponibilidade: ${item.stock}`}
                             </p>
-                            <div className={"addCartBtn"} onClick={e=>addItem(e.target)}>+</div>
+                            <div
+                                className="addCartBtn"
+                                onClick={e => addItem(e.target)}
+                                style={{display: item.stock <= 0 ? "none" : "flex"}}
+                            >+</div>
                         </div>
                     ))
                 ) : (

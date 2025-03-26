@@ -1,6 +1,8 @@
-.container{
+.container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    justify-content: center;
 }
 
 label{
@@ -15,20 +17,12 @@ input{
     margin-bottom: 1.5rem;
 }
 
-@media (max-width: 1300px) {
-    .container{
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-}
-
-.item{
+.item {
     color: black;
     background-color: #F0F0F0;
-    width: 20vw;
-    max-width: 250px;
     padding: 10px;
-    margin: 10px;
     border-radius: 15px;
+    text-align: center;
 }
 
 .itemImage{
