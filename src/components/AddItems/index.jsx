@@ -43,18 +43,24 @@ function AddItems({onAddItems, onError}) {
             type,
             price,
             stock: initialStock
-        }
+        };
         api.post('/item', data)
             .then(response => {
                 if(response.status === 200) {
                     onAddItems();
-                } else{
+                    setImageLink("");
+                    setName("");
+                    setType("");
+                    setPrice(0);
+                    setInitialStock(0);
+                    setShowOtherType(false);
+                } else {
                     throw new Error(response.data);
                 }
             })
             .catch(error => {
                 onError('Could not add item', error);
-            })
+            });
     }
 
     return (
@@ -66,18 +72,21 @@ function AddItems({onAddItems, onError}) {
                         <img className={'exampleImage'} src={imageLink} alt={'Sem Imagem'}/>
                     )}
                     <input
+                        value={imageLink}
                         onChange={e => setImageLink(e.target.value)}
                         type={'text'}
                         placeholder={'Link da Imagem'}
                     />
                 </div>
                 <input
+                    value={name}
                     required={true}
                     onChange={e => setName(e.target.value)}
                     type={'Text'}
                     placeholder="Nome do Item"
                 />
                 <select
+                    value={type}
                     required={true}
                     onChange={e => {
                         const selectedValue = e.target.value;
@@ -93,28 +102,37 @@ function AddItems({onAddItems, onError}) {
                 {showOtherType && (
                     <input
                         required={true}
+                        value={type}
                         onChange={e => setType(e.target.value)}
                         type={'Text'}
                         placeholder={'Tipo do Item'}
                     />
                 )}
-                <input
-                    required={true}
-                    onChange={e => setPrice(Number(e.target.value))}
-                    type={'Number'}
-                    placeholder="Preço"
-                    step={'any'}
-                />
-                <input
-                    required={true}
-                    onChange={e => setInitialStock(Number(e.target.value))}
-                    type={'Number'}
-                    placeholder="Estoque Inicial"
-                />
-                <button type="submit">Adicionar</button>
+                <div className={'labelInputContainer'}>
+                    <label>Preço</label>
+                    <input
+                        value={price}
+                        required={true}
+                        onChange={e => setPrice(Number(e.target.value))}
+                        type={'Number'}
+                        placeholder="Preço"
+                        step={'any'}
+                    />
+                </div>
+                <div className={'labelInputContainer'}>
+                    <label>Estoque</label>
+                    <input
+                        value={initialStock}
+                        required={true}
+                        onChange={e => setInitialStock(Number(e.target.value))}
+                        type={'Number'}
+                        placeholder="Estoque Inicial"
+                    />
+                </div>
+                    <button type="submit">Adicionar</button>
             </form>
         </div>
-    );
+);
 }
 
 export default AddItems;

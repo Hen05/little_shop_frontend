@@ -12,6 +12,10 @@
   font-weight: 400;
 }
 
+body{
+  background-color: #EEEEEE;
+}
+
 input, select{
   outline: none;
   background-color: white;

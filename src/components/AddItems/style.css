@@ -8,6 +8,10 @@
     box-sizing: border-box; /* Para garantir que o padding não interfira nas dimensões */
 }
 
+.addItemsContainer label{
+    font-size: 14px;
+}
+
 .addItemsContainer form {
     margin-top: 20px;
     display: flex;
@@ -17,6 +21,14 @@
     gap: 15px; /* Espaçamento entre os elementos do formulário */
 }
 
+.labelInputContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
 .exampleImage{
     align-self: center;
 

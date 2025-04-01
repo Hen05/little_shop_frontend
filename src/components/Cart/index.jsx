@@ -114,7 +114,7 @@ function Cart({ selectedItems = [], setSelectedItems, fetchItems}) {
                     ))}
                </div>
             </div>
-            <button onClick={handleFinishBuy}>Total: {total}</button>
+            <button onClick={handleFinishBuy}>Total: R${total}</button>
         </div>
     );
 }

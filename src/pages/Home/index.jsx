@@ -7,6 +7,9 @@ import AddItems from "../../components/AddItems";
 import ViewGraphics from "../../components/ViewGraphics";
 import {menuList} from "../../services/menuData.js";
 import Sell from "../../components/Sell";
+import AddStock from "../../components/AddStock/index.jsx";
+import AttPrice from "../../components/AttPrice/index.jsx";
+import ViewData from "../../components/ViewData/index.jsx";
 
 function Index() {
     const [isHomeArea, setIsHomeArea] = useState(false);
@@ -14,21 +17,29 @@ function Index() {
     const [isViewItems, setIsViewItems] = useState(false);
     const [isAddItems, setIsAddItems] = useState(false);
     const [isViewGraphics, setIsViewGraphics] = useState(false);
+    const [isAddStock, setIsAddStock] = useState(false);
+    const [isAttPrice, setIsAttPrice] = useState(false);
+    const [isViewData, setIsViewData] = useState(false);
 
     const setFunc = {
         'home': (value) => setIsHomeArea(value),
         'sell': value => setIsSell(value),
+        'addStock': (value) => setIsAddStock(value),
+        'attPrice': (value) => setIsAttPrice(value),
         'seeItems': (value) => setIsViewItems(value),
         'addItems': (value) => setIsAddItems(value),
         'viewGraphics': (value) => setIsViewGraphics(value),
+        'viewData': (value) => setIsViewData(value)
     }
 
     useEffect(() => {
         setIsHomeArea(true);
         setIsSell(false);
+        setIsAddStock(false);
         setIsViewItems(false);
         setIsAddItems(false);
         setIsViewGraphics(false);
+        setIsViewData(false);
     }, [])
 
     function handleChangeMenu(e){
@@ -62,12 +73,15 @@ function Index() {
             <div className="mainContainer">
                 {isHomeArea && <HomeArea/>}
                 {isSell && <Sell/>}
+                {isAttPrice && <AttPrice/>}
+                {isAddStock && <AddStock/>}
                 {isViewItems && <ViewItems/>}
                 {isAddItems && <AddItems
                     onAddItems={(message) => onSuccessAddItem(message)}
                     onError={onError}
                 />}
                 {isViewGraphics && <ViewGraphics/>}
+                {isViewData && <ViewData/>}
             </div>
         </div>
 

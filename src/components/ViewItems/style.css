@@ -17,12 +17,15 @@ input{
     margin-bottom: 1.5rem;
 }
 
-.item {
+.item{
+    position: relative;
     color: black;
-    background-color: #F0F0F0;
+    background-color: white;
+    width: 20vw;
+    max-width: 250px;
     padding: 10px;
+    margin: 10px;
     border-radius: 15px;
-    text-align: center;
 }
 
 .itemImage{

@@ -16,9 +16,11 @@
     position: relative;
     width: 150%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 10px;
     justify-content: center;
+    border-radius: 50%;
+    padding: 10px;
 }
 
 .cartItem{
@@ -32,7 +34,9 @@
     height: 100px;
     background-size: contain;
     background-position: center;
+    background-color: white;
     background-repeat: no-repeat;
+    border-radius: 50px;
 }
 
 .cartInfos{

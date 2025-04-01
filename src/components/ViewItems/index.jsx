@@ -27,6 +27,7 @@ function ViewItems() {
         async function fetchItems() {
             const fetchedItems = await getItems();
             setItems(fetchedItems);
+            console.log(fetchedItems.filter(item => !item.actualPrice));
         }
         fetchItems();
     }, []);
@@ -40,7 +41,7 @@ function ViewItems() {
         item.type.toLowerCase().includes(searchTerm) ||
         item.price.toString().includes(searchTerm) ||
         item.stock.toString() === (("indisponivel".includes(searchTerm) ? '0' : searchTerm))
-    );
+    ).sort((itemA, itemB) => itemB.stock - itemA.stock);
 
     return (
         <div>
@@ -63,7 +64,7 @@ function ViewItems() {
                             <p className="itemType">{item.type}</p>
                             <p className="itemPrice">{formatToReal(item.price)}</p>
                             <p className="itemStock">
-                                {item.stock <= 0 ? "Indisponível" : `Disponibilidade: ${item.stock}`}
+                                {item.stock <= 0 ? "Indisponível" : `Estoque: ${item.stock}`}
                             </p>
                         </div>
                     ))
